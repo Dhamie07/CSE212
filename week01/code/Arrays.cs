@@ -9,11 +9,18 @@ public static class Arrays
     public static double[] MultiplesOf(double number, int length)
     {
         // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // 1. Create a new array of doubles with the exact size specified by 'length'.
+        var result = new double[length];
 
-        return []; // replace this return statement with your own
+        // 2. Loop through each index to calculate and assign the multiples.
+        // We multiply by (i + 1) so the first element is number * 1, the second is number * 2, etc.
+        for (int i = 0; i < length; i++)
+        {
+            result[i] = number * (i + 1);
+        }
+
+        // 3. Return the completed array.
+        return result;
     }
 
     /// <summary>
@@ -26,8 +33,25 @@ public static class Arrays
     public static void RotateListRight(List<int> data, int amount)
     {
         // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // 1. Quick check to make sure we actually have something to rotate.
+        if (data == null || data.Count <= 1 || amount <= 0)
+            return;
+
+        // 2. Normalize the amount using modulo just in case it's larger than the list size.
+        amount = amount % data.Count;
+        if (amount == 0)
+            return;
+
+        // 3. Figure out the index where the elements that need to move to the front begin.
+        int splitIndex = data.Count - amount;
+
+        // 4. Slice out the trailing elements that are moving to the front.
+        var trailingItems = data.GetRange(splitIndex, amount);
+
+        // 5. Remove those trailing elements from their original spot at the end.
+        data.RemoveRange(splitIndex, amount);
+
+        // 6. Insert them right back at the very beginning of the list (index 0).
+        data.InsertRange(0, trailingItems);
     }
 }
